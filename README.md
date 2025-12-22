@@ -3,7 +3,6 @@
 ```
 finance-agent/
 ├── .github/                 # Cấu hình CI/CD (nếu có)
-├── .vscode/                 # Cấu hình Editor (nếu dùng VS Code)
 ├── src/
 │   └── finance_agent/       # Package chính của dự án
 │       ├── __init__.py
