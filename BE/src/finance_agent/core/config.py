@@ -11,6 +11,12 @@ class Settings(BaseSettings):
     openai_api_key: Optional[str] = None
     anthropic_api_key: Optional[str] = None
     
+    # Model
+    model_name: str = "qwen3:8b"
+
+    # Tavily
+    tavily_api_key: Optional[str] = None
+
     # Application Settings
     app_name: str = "Finance Agent"
     debug: bool = False
@@ -22,3 +28,4 @@ class Settings(BaseSettings):
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"
+        extra = "ignore"
