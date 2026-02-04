@@ -1,24 +1,27 @@
-"""Entry point cho Finance Agent"""
+"""Main entry point for Finance Agent API"""
 
-import asyncio
-from finance_agent.config.settings import Settings
-from finance_agent.graph.workflow import create_workflow
-from finance_agent.utils.logger import setup_logger
+from fastapi import FastAPI
+from finance_agent.shared.logger import setup_logger
+from finance_agent.core.config import Settings
+from finance_agent.api.v1.research import router as research_router_v1
 
 logger = setup_logger(__name__)
+settings = Settings()
 
+app = FastAPI(
+    title=settings.app_name,
+    description="Fintech Research Agent API",
+    version="1.0.0"
+)
 
-async def main():
-    """Khởi chạy Finance Agent"""
-    settings = Settings()
-    logger.info("Starting Finance Agent...")
-    
-    # Tạo workflow
-    workflow = create_workflow()
-    
-    # TODO: Implement main logic
-    logger.info("Finance Agent is running...")
+# Root endpoint
+@app.get("/")
+async def root():
+    return {"message": f"Welcome to {settings.app_name} API", "status": "online"}
 
+# Include routers
+app.include_router(research_router_v1, prefix="/api/v1/research", tags=["Research"])
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
